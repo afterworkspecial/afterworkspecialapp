@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <h2>
-    Login
+    Register
 </h2>
 
 <form th:action="${successfulLogin}" method="post">
@@ -12,9 +12,9 @@
     <input type="text" id="username" name="username" autofocus="autofocus"/>
     <br>
     <br>
-    <label for="password">Password</label>:
+    <label for="password">Password</label>
     <input type="password" id="password" name="password" /> <br /><br>
-    <input type="submit" value="Log in" />
+    <input type="submit" value="Register" />
 
     <p><a href="/" th:href="@{/}">Back to home page</a></p>
 </form>
