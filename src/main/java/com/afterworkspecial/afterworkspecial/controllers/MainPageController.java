@@ -22,7 +22,6 @@ public class MainPageController {
 
     UserRepository userRepository;
 
-    @Autowired
     public MainPageController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -49,8 +48,6 @@ public class MainPageController {
 
     @PostMapping("/register")
     public String createNewUserWithRegistration(@ModelAttribute User user, Model model) {
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
         return "home";
     }
 }
