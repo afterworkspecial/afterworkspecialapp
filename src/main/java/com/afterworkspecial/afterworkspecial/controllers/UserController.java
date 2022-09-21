@@ -1,13 +1,10 @@
 package com.afterworkspecial.afterworkspecial.controllers;
 
+import com.afterworkspecial.afterworkspecial.domain.Whatsup;
 import com.afterworkspecial.afterworkspecial.repository.UserRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class UserController {
 
     private UserRepository userRepository;
@@ -17,7 +14,7 @@ public class UserController {
     }
 
     // /users/username
-    // GET - user main page
+    // GET - user main page info?
     @GetMapping("/users/{username}")
     public String userMainPage() {
         return "usermainpage";
@@ -25,8 +22,8 @@ public class UserController {
     // /users/username/whatsup/{id}
     // GET - specific user whatsup by id
     @GetMapping("users/username/whatsup/{id}")
-    public String getWhatupById() {
-        return "error";
+    public Whatsup getWhatupById() {
+        return null;
     }
     // PATCH - update specific whatsup
     @PatchMapping("users/username/whatsup/{id}")
