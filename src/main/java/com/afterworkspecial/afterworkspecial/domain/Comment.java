@@ -1,10 +1,8 @@
 package com.afterworkspecial.afterworkspecial.domain;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "comment")
 public class Comment {
 
     @Id
@@ -12,14 +10,14 @@ public class Comment {
     private Long id;
     private String text;
     @OneToOne
-    private User user;
+    private User _user;
 
     public Comment() {
 
     }
-    public Comment(String text, User user) {
+    public Comment(String text, User _user) {
         this.text = text;
-        this.user = user;
+        this._user = _user;
     }
 
     public String getText() {
@@ -30,12 +28,12 @@ public class Comment {
         this.text = text;
     }
 
-    public User getUser() {
-        return user;
+    public User get_user() {
+        return _user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void set_user(User _user) {
+        this._user = _user;
     }
 
     @Override
@@ -47,14 +45,14 @@ public class Comment {
 
         if (id != null ? !id.equals(comment.id) : comment.id != null) return false;
         if (text != null ? !text.equals(comment.text) : comment.text != null) return false;
-        return user != null ? user.equals(comment.user) : comment.user == null;
+        return _user != null ? _user.equals(comment._user) : comment._user == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (_user != null ? _user.hashCode() : 0);
         return result;
     }
 }

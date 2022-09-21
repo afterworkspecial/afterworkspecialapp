@@ -11,7 +11,7 @@ public class Whatsup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    private User user;
+    private User _user;
     private String text;
     private int likes;
     private LocalDateTime createdDate;
@@ -21,19 +21,19 @@ public class Whatsup {
     public Whatsup() {
 
     }
-    public Whatsup(User user, String text, int likes, LocalDateTime createdDate) {
-        this.user = user;
+    public Whatsup(User _user, String text, int likes, LocalDateTime createdDate) {
+        this._user = _user;
         this.text = text;
         this.likes = likes;
         this.createdDate = createdDate;
     }
 
-    public User getUser() {
-        return user;
+    public User get_user() {
+        return _user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void set_user(User _user) {
+        this._user = _user;
     }
 
     public String getText() {
@@ -77,7 +77,7 @@ public class Whatsup {
 
         if (likes != whatsup.likes) return false;
         if (id != null ? !id.equals(whatsup.id) : whatsup.id != null) return false;
-        if (user != null ? !user.equals(whatsup.user) : whatsup.user != null) return false;
+        if (_user != null ? !_user.equals(whatsup._user) : whatsup._user != null) return false;
         if (text != null ? !text.equals(whatsup.text) : whatsup.text != null) return false;
         if (createdDate != null ? !createdDate.equals(whatsup.createdDate) : whatsup.createdDate != null) return false;
         return commentsList != null ? commentsList.equals(whatsup.commentsList) : whatsup.commentsList == null;
@@ -86,7 +86,7 @@ public class Whatsup {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (_user != null ? _user.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + likes;
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
