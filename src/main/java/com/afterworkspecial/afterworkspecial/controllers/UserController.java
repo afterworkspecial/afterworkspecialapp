@@ -6,6 +6,8 @@ import com.afterworkspecial.afterworkspecial.repository.CommentRepository;
 import com.afterworkspecial.afterworkspecial.repository.UserRepository;
 import com.afterworkspecial.afterworkspecial.repository.WhatsupRepository;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -33,24 +35,31 @@ public class UserController {
 
     // /users/username
     // GET - user main page info?
+    // right now it is returning user object
     @GetMapping("/users/{username}")
-    public String userMainPage() {
-        return "error - page does not exist";
+    public ResponseEntity<User> userMainPage(@PathVariable String username) {
+        User user = userRepository.findByUsernameIs(username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    //
     @GetMapping("users/username/whatsup/{id}")
     public EntityModel<Whatsup> getWhatupById(@PathVariable Long id) {
         return EntityModel.of(whatsupRepository.findWhatsupById(id));
     }
+
     // PATCH - update specific whatsup
     @PatchMapping("users/username/whatsup/{id}")
     public String updateWhatupById() {
         return "error";
     }
+
     // DELETE - delete whatsup by id
     @DeleteMapping("users/username/whatsup/{id}")
     public String deleteWhatUpById() {
         return "error";
     }
+
     // /users/username/whatsup/
     // POST - create new whatsup
     @PostMapping("users/username/whatsup")

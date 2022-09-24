@@ -3,14 +3,15 @@ package com.afterworkspecial.afterworkspecial.controllers;
 import com.afterworkspecial.afterworkspecial.domain.User;
 import com.afterworkspecial.afterworkspecial.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class MainPageController {
 
 //    @GetMapping("/user/registration")
@@ -21,10 +22,14 @@ public class MainPageController {
 //    }
 
     UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public MainPageController(UserRepository userRepository) {
+    @Autowired
+    public MainPageController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
+
 
     @GetMapping("/")
     public String home() {
@@ -47,7 +52,20 @@ public class MainPageController {
     }
 
     @PostMapping("/register")
-    public String createNewUserWithRegistration(@ModelAttribute User user, Model model) {
-        return "home";
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+
+        if (userRepository.existsByUsername(user.getUsername())) {
+            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userRepository.existsByEmail(user.getEmail())) {
+            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
+        }
+
+        User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getEmail(), user.getRole());
+
+        userRepository.save(newUser);
+
+        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 }
