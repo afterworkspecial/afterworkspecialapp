@@ -22,12 +22,10 @@ public class MainPageController {
 //    }
 
     UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MainPageController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public MainPageController(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -51,21 +49,5 @@ public class MainPageController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
 
-        if (userRepository.existsByUsername(user.getUsername())) {
-            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
-        }
-
-        if (userRepository.existsByEmail(user.getEmail())) {
-            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
-        }
-
-        User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getEmail(), user.getRole());
-
-        userRepository.save(newUser);
-
-        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
-    }
 }
